@@ -1,62 +1,117 @@
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import ru.praktikum.scooter.HomePageScooter;
 
-public class CheckDropDownListFAQ {
-        // класс проверки выпадающих списков ФАК
-        private WebDriver driver;
-
-        @Test
-        public void faqTest() {
-            driver = new ChromeDriver();
-            driver.get("https://qa-scooter.praktikum-services.ru/");
-            HomePageScooter objHomePage = new HomePageScooter(driver);
-            objHomePage.pushCookieButton();
-
-            objHomePage.clickListElement(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[1]"));
-            String text1 = "Сутки — 400 рублей. Оплата курьеру — наличными или картой.";
-            isElementPassed(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[1]/div[2]/p"), text1);
-
-            objHomePage.clickListElement(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[2]"));
-            String text2 = "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим.";
-            isElementPassed(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[2]/div[2]/p"), text2);
-
-            objHomePage.clickListElement(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[3]"));
-            String text3 = "Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. Отсчёт времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30.";
-            isElementPassed(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[3]/div[2]/p"), text3);
-
-            objHomePage.clickListElement(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[4]"));
-            String text4 = "Только начиная с завтрашнего дня. Но скоро станем расторопнее.";
-            isElementPassed(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[4]/div[2]/p"), text4);
-
-            objHomePage.clickListElement(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[5]"));
-            String text5 = "Пока что нет! Но если что-то срочное — всегда можно позвонить в поддержку по красивому номеру 1010.";
-            isElementPassed(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[5]/div[2]/p"), text5);
-
-            objHomePage.clickListElement(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[6]"));
-            String text6 = "Самокат приезжает к вам с полной зарядкой. Этого хватает на восемь суток — даже если будете кататься без передышек и во сне. Зарядка не понадобится.";
-            isElementPassed(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[6]/div[2]/p"), text6);
-
-            objHomePage.clickListElement(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[7]"));
-            String text7 = "Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не попросим. Все же свои.";
-            isElementPassed(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[7]/div[2]/p"), text7);
-
-            objHomePage.clickListElement(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[8]"));
-            String text8 = "Да, обязательно. Всем самокатов! И Москве, и Московской области.";
-            isElementPassed(By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[8]/div[2]/p"), text8);
-
-        }
-    public void isElementPassed(By elementPath, String elementText) {
-        String text = driver.findElement(elementPath).getText();
-        Assert.assertTrue(elementText, text.contains(elementText));
+@RunWith(Parameterized.class)
+public class CheckDropDownListFAQ{
+    private WebDriver driver;
+    private static final String URL_ADDRESS = "https://qa-scooter.praktikum-services.ru/";
+    private final String text1;
+    private final String text2;
+    private final String text3;
+    private final String text4;
+    private final String text5;
+    private final String text6;
+    private final String text7;
+    private final String text8;
+    public CheckDropDownListFAQ (String text1, String text2, String text3, String text4, String text5, String text6, String text7, String text8){
+        this.text1 = text1;
+        this.text2 = text2;
+        this.text3 = text3;
+        this.text4 = text4;
+        this.text5 = text5;
+        this.text6 = text6;
+        this.text7 = text7;
+        this.text8 = text8;
     }
-
-
+    @Before public void startDriver() {
+        driver = new ChromeDriver();
+        driver.get(URL_ADDRESS);
+    }
+    @Parameterized.Parameters
+    public static Object[][] getTestTextData() {
+        return new Object[][] {
+                {"Сутки — 400 рублей. Оплата курьеру — наличными или картой.",
+                        "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим.",
+                        "Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. Отсчёт времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30.",
+                        "Только начиная с завтрашнего дня. Но скоро станем расторопнее.",
+                        "Пока что нет! Но если что-то срочное — всегда можно позвонить в поддержку по красивому номеру 1010.",
+                        "Самокат приезжает к вам с полной зарядкой. Этого хватает на восемь суток — даже если будете кататься без передышек и во сне. Зарядка не понадобится.",
+                        "Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не попросим. Все же свои.",
+                        "Да, обязательно. Всем самокатов! И Москве, и Московской области."
+                }
+        };
+    }
+    @Test
+    public void faqTest1() {
+        HomePageScooter objHomePage = new HomePageScooter(driver);
+        objHomePage.pushCookieButton();
+        objHomePage.clickListElement1();
+        objHomePage.waitForFAQTextLoad();
+        Assert.assertEquals(text1, objHomePage.pathToString(objHomePage.listFAQTxt1));
+    }
+    @Test
+    public void faqTest2() {
+        HomePageScooter objHomePage = new HomePageScooter(driver);
+        objHomePage.pushCookieButton();
+        objHomePage.clickListElement2();
+        objHomePage.waitForFAQTextLoad();
+        Assert.assertEquals(text2, objHomePage.pathToString(objHomePage.listFAQTxt2));
+    }
+    @Test
+    public void faqTest3() {
+        HomePageScooter objHomePage = new HomePageScooter(driver);
+        objHomePage.pushCookieButton();
+        objHomePage.clickListElement3();
+        objHomePage.waitForFAQTextLoad();
+        Assert.assertEquals(text3, objHomePage.pathToString(objHomePage.listFAQTxt3));
+    }
+    @Test
+    public void faqTest4() {
+        HomePageScooter objHomePage = new HomePageScooter(driver);
+        objHomePage.pushCookieButton();
+        objHomePage.clickListElement4();
+        objHomePage.waitForFAQTextLoad();
+        Assert.assertEquals(text4, objHomePage.pathToString(objHomePage.listFAQTxt4));
+    }
+    @Test
+    public void faqTest5() {
+        HomePageScooter objHomePage = new HomePageScooter(driver);
+        objHomePage.pushCookieButton();
+        objHomePage.clickListElement5();
+        objHomePage.waitForFAQTextLoad();
+        Assert.assertEquals(text5, objHomePage.pathToString(objHomePage.listFAQTxt5));
+    }
+    @Test
+    public void faqTest6() {
+        HomePageScooter objHomePage = new HomePageScooter(driver);
+        objHomePage.pushCookieButton();
+        objHomePage.clickListElement6();
+        objHomePage.waitForFAQTextLoad();
+        Assert.assertEquals(text6, objHomePage.pathToString(objHomePage.listFAQTxt6));
+    }
+    @Test
+    public void faqTest7() {
+        HomePageScooter objHomePage = new HomePageScooter(driver);
+        objHomePage.pushCookieButton();
+        objHomePage.clickListElement7();
+        objHomePage.waitForFAQTextLoad();
+        Assert.assertEquals(text7, objHomePage.pathToString(objHomePage.listFAQTxt7));
+    }
+    @Test
+    public void faqTest8() {
+        HomePageScooter objHomePage = new HomePageScooter(driver);
+        objHomePage.pushCookieButton();
+        objHomePage.clickListElement8();
+        objHomePage.waitForFAQTextLoad();
+        Assert.assertEquals(text8, objHomePage.pathToString(objHomePage.listFAQTxt8));
+    }
         @After
     public void teardown() { driver.quit(); }
-
 }

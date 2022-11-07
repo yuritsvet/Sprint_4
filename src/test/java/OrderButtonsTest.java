@@ -5,25 +5,29 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import ru.praktikum.scooter.HomePageScooter;
 
 public class OrderButtonsTest {
-    // класс проверки нажатия кнопок "заказать"
+    private static final String URL_ADDRESS = "https://qa-scooter.praktikum-services.ru/";
     private WebDriver driver;
-
     @Test
-    public void checkOrderButtons() {
+    public void checkTopOrderButton() {
         // драйвер для браузера Chrome
         driver = new ChromeDriver();
         // переход на страницу тестового приложения
-        driver.get("https://qa-scooter.praktikum-services.ru/");
+        driver.get(URL_ADDRESS);
         HomePageScooter objHomePage = new HomePageScooter(driver); // создал объект класса домашней страницы
         objHomePage.waitForTopButtonLoad();
-
-        objHomePage.pushCookieButton();
         objHomePage.pushButtonInTopOfPage(); // нажали верхнюю кнопку заказать
-        driver.navigate().back();//назад
+    }
+    @Test
+    public void checkBottomOrderButton() {
+        // драйвер для браузера Chrome
+        driver = new ChromeDriver();
+        // переход на страницу тестового приложения
+        driver.get(URL_ADDRESS);
+        HomePageScooter objHomePage = new HomePageScooter(driver); // создал объект класса домашней страницы
+        objHomePage.pushCookieButton();
         objHomePage.waitForBottomButtonLoad();
         objHomePage.pushButtonInBottomOfPage(); // нажали нижнюю кнопку заказать
     }
-
     @After
     public void teardown() {
         driver.quit();
