@@ -24,11 +24,15 @@ public class OrderPageScooter {
     private By orderButton = By.xpath("//*[@id='root']/div/div[2]/div[3]/button[2]"); // //button[text()='Заказать'] //*[@id="root"]/div/div[2]/div[3]/button[2]
     private By approveButton = By.xpath("///button[text()='Да']");
     private By successPopup = By.xpath("//*[contains(text()='Хотите оформить заказ?')]"); // Хотите оформить заказ?
+    private By orderPageHeader = By.xpath("//*[@id='root']/div/div[2]/div[1]");
     public OrderPageScooter(WebDriver driver){ // конструктор класса
         this.driver = driver;
     }
 
     //Методы
+    public String orderPageIsOpen() {
+        return driver.findElement(orderPageHeader).getText();
+    }
     public void waitForApproveButtonLoad() {
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.elementToBeClickable(approveButton));
