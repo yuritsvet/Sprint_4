@@ -46,11 +46,12 @@ public class OrderFormTest {
         HomePageScooter objHomePage = new HomePageScooter(driver);
         objHomePage.waitForTopButtonLoad();
         objHomePage.pushCookieButton();
-        if (whatBtn == "top") {
-            objHomePage.pushButtonInTopOfPage(); }
-        else if (whatBtn == "bttm") {
-            objHomePage.pushButtonInBottomOfPage();
-        }
+
+        if ("top".equals(whatBtn)) {
+            objHomePage.pushButtonInTopOfPage();
+            }
+        else if ("bttm".equals(whatBtn)) {
+            objHomePage.pushButtonInBottomOfPage(); }
 
         OrderPageScooter objOrderPage = new OrderPageScooter(driver);
         objOrderPage.setUserName(userName);

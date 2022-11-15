@@ -46,34 +46,6 @@ public class CheckDropDownListFAQ{
         objHomePage.clickListElement(elementNum);
         objHomePage.waitForFAQTextLoad();
         Assert.assertEquals(objHomePage.pathToString(elementTextNum), text);
-
-        objHomePage.clickListElement(elementNum);
-        objHomePage.waitForFAQTextLoad();
-        Assert.assertEquals(objHomePage.pathToString(elementTextNum), text);
-
-        objHomePage.clickListElement(elementNum);
-        objHomePage.waitForFAQTextLoad();
-        Assert.assertEquals(objHomePage.pathToString(elementTextNum), text);
-
-        objHomePage.clickListElement(elementNum);
-        objHomePage.waitForFAQTextLoad();
-        Assert.assertEquals(objHomePage.pathToString(elementTextNum), text);
-
-        objHomePage.clickListElement(elementNum);
-        objHomePage.waitForFAQTextLoad();
-        Assert.assertEquals(objHomePage.pathToString(elementTextNum), text);
-
-        objHomePage.clickListElement(elementNum);
-        objHomePage.waitForFAQTextLoad();
-        Assert.assertEquals(objHomePage.pathToString(elementTextNum), text);
-
-        objHomePage.clickListElement(elementNum);
-        objHomePage.waitForFAQTextLoad();
-        Assert.assertEquals(objHomePage.pathToString(elementTextNum), text);
-
-        objHomePage.clickListElement(elementNum);
-        objHomePage.waitForFAQTextLoad();
-        Assert.assertEquals(objHomePage.pathToString(elementTextNum), text);
     }
         @After
     public void teardown() { driver.quit(); }

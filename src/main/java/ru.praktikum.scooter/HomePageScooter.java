@@ -12,28 +12,28 @@ public class HomePageScooter {
     private WebDriver driver;
     private By cookieButton = By.className("App_CookieButton__3cvqF");
     private By orderButtonInTopOfPage = By.className("Button_Button__ra12g"); //кнопка заказать вверху страницы
-    private By orderButtonInBottomOfPage = By.xpath("/html/body/div/div/div[1]/div[4]/div[2]/div[5]/button"); //кнопка заказать внизу страницы
-    private By faqElements = By.xpath("/html/body/div/div/div/div[5]/div[2]");
+    private By orderButtonInBottomOfPage = By.className("Button_Middle__1CSJM"); //кнопка заказать внизу страницы
+    private By faqElements = By.className("Home_FAQ__3uVm4");
     // выдадающие поля FAQ
     public By[] listElements = {
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[1]"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[2]"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[3]"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[4]"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[5]"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[6]"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[7]"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[8]"),
+            By.id("accordion__heading-0"),
+            By.id("accordion__heading-1"),
+            By.id("accordion__heading-2"),
+            By.id("accordion__heading-3"),
+            By.id("accordion__heading-4"),
+            By.id("accordion__heading-5"),
+            By.id("accordion__heading-6"),
+            By.id("accordion__heading-7"),
     };
     public By[] textInList = {
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[1]/div[2]/p"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[2]/div[2]/p"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[3]/div[2]/p"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[4]/div[2]/p"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[5]/div[2]/p"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[6]/div[2]/p"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[7]/div[2]/p"),
-            By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[8]/div[2]/p"),
+            By.id("accordion__panel-0"),
+            By.id("accordion__panel-1"),
+            By.id("accordion__panel-2"),
+            By.id("accordion__panel-3"),
+            By.id("accordion__panel-4"),
+            By.id("accordion__panel-5"),
+            By.id("accordion__panel-6"),
+            By.id("accordion__panel-7"),
     };
     public HomePageScooter(WebDriver driver){ // конструктор класса
         this.driver = driver;
@@ -45,6 +45,7 @@ public class HomePageScooter {
         driver.findElement(orderButtonInTopOfPage).click(); // нажимаем заказать вверху страницы
     }
     public void pushButtonInBottomOfPage() {
+        waitForBottomButtonLoad();
         scrollPage(orderButtonInBottomOfPage);
         driver.findElement(orderButtonInBottomOfPage).click();
     }
