@@ -47,10 +47,10 @@ public class OrderFormTest {
         objHomePage.waitForTopButtonLoad();
         objHomePage.pushCookieButton();
 
-        if ("top".equals(whatBtn)) {
+        if (whatBtn.equals("top")) {
             objHomePage.pushButtonInTopOfPage();
             }
-        else if ("bttm".equals(whatBtn)) {
+        else if (whatBtn.equals("bttm")) {
             objHomePage.pushButtonInBottomOfPage(); }
 
         OrderPageScooter objOrderPage = new OrderPageScooter(driver);
