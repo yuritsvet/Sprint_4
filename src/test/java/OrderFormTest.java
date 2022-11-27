@@ -1,5 +1,7 @@
 import org.junit.After;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import ru.praktikum.scooter.HomePageScooter;
@@ -8,47 +10,66 @@ import ru.praktikum.scooter.OrderPageScooter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@RunWith(Parameterized.class)
 public class OrderFormTest {
-    // класс проверки заполнения формы заказа и ее отправки
     private WebDriver driver;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    private static final String URL_ADDRESS = "https://qa-scooter.praktikum-services.ru/";
+        private final String whatBtn;
+        private final String userName;
+        private final String userSurname;
+        private final String userAddress;
+        private final String userPhone;
+        private final String comment;
+        private final String success;
+        public OrderFormTest(String whatBtn, String userName, String userSurname, String userAddress, String userPhone, String comment, String success) {
+            this.whatBtn = whatBtn;
+            this.userName = userName;
+            this.userSurname = userSurname;
+            this.userAddress = userAddress;
+            this.userPhone = userPhone;
+            this.comment = comment;
+            this.success = success;
 
+        }
+        @Parameterized.Parameters
+        public static Object[][] getTestData() {
+            return new Object[][] {
+                    {"top", "Иван", "Петров", "Льва Толстого 16", "79990001122", "комментарий курьеру", "Заказ оформлен"},
+                    {"bttm", "Семен", "Иванов", "Главная 3", "73338881122", "простой нкомментарий курьеру", "Заказ оформлен"}
+            };
+        }
     @Test
     public void checkOrderForm() {
-        // драйвер для браузера Chrome
         driver = new ChromeDriver();
-        // переход на страницу тестового приложения
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        HomePageScooter objHomePage = new HomePageScooter(driver); // создал объект класса домашней страницы
+        driver.get(URL_ADDRESS);
+        HomePageScooter objHomePage = new HomePageScooter(driver);
         objHomePage.waitForTopButtonLoad();
         objHomePage.pushCookieButton();
-        objHomePage.pushButtonInTopOfPage();
 
-        OrderPageScooter objOrderPage = new OrderPageScooter(driver); //объект класса страницы с формой заказа
-        String userName = "Иван";
+        if (whatBtn.equals("top")) {
+            objHomePage.pushButtonInTopOfPage();
+            }
+        else if (whatBtn.equals("bttm")) {
+            objHomePage.pushButtonInBottomOfPage(); }
+
+        OrderPageScooter objOrderPage = new OrderPageScooter(driver);
         objOrderPage.setUserName(userName);
-        String userSurname = "Петров";
         objOrderPage.setUserSurname(userSurname);
-        String userAddress = "Льва Толстого 16";
         objOrderPage.setUserAddress(userAddress);
         objOrderPage.setMetro();
-        String userPhone = "79990001122";
         objOrderPage.setUserPhone(userPhone);
         objOrderPage.clickNextButton();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String deliveryDate = LocalDate.now().plusDays(3).format(formatter);
         objOrderPage.setDeliveryDate(deliveryDate);
         objOrderPage.setRentalPeriod();
-        String comment = "комментарий для курьера";
         objOrderPage.setComment(comment);
         objOrderPage.clickOrderButton();
         objOrderPage.waitForApproveButtonLoad();
         objOrderPage.clickApproveButton();
-        String success = "Заказ оформлен";
         objOrderPage.waitForSuccessOrder(success);
     }
     @After
-    public void teardown() {
-        driver.quit();
-    }
+    public void teardown() { driver.quit(); }
 }
